@@ -60,6 +60,28 @@ paths:
       tags:
       - languages
   /languages/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a programming language by its ID
+      parameters:
+      - description: Language ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Delete a programming language by ID
+      tags:
+      - languages
     get:
       consumes:
       - application/json

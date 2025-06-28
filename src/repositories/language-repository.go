@@ -35,3 +35,10 @@ func (repo *LanguageRepository) CreateLanguage(language *models.Language) error 
 	}
 	return nil
 }
+
+func (repo *LanguageRepository) DeleteLanguage(id uint) error {
+	if err := repo.DB.Delete(&models.Language{}, id).Error; err != nil {
+		return err
+	}
+	return nil
+}

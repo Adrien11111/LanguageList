@@ -49,8 +49,25 @@ func GetAllLanguagesRoute(r *gin.RouterGroup) {
 func GetLanguageByIdRoute(r *gin.RouterGroup) {
 	r.GET("/:id", controllers.GetLanguageById)
 }
+
+// Delete language by ID
+// @Summary Delete a programming language by ID
+// @Description Delete a programming language by its ID
+// @Tags languages
+// @Accept json
+// @Produce json
+// @Param id path int true "Language ID"
+// @Success 204
+// @Failure 404
+// @Failure 500
+// @Router /languages/{id} [delete]
+func DeleteLanguageRoute(r *gin.RouterGroup) {
+	r.DELETE("/:id", controllers.DeleteLanguage)
+}
+
 func SetupLanguageRoutes(r *gin.RouterGroup) {
 	AddLanguageRoute(r)
 	GetAllLanguagesRoute(r)
 	GetLanguageByIdRoute(r)
+	DeleteLanguageRoute(r)
 }

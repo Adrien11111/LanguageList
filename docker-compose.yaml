@@ -11,12 +11,11 @@ services:
     volumes:
       - type: volume
         source: database
-        target: /var/lib/mysql
+        target: /var/lib/postgresql/data
     environment:
-      - MYSQL_ROOT_PASSWORD=${BD_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${BD_NAME}
-      - MYSQL_USER=${BD_USER}
-      - MYSQL_PASSWORD=${BD_PASSWORD}
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
     networks:
       - go-api-network
   golang:
@@ -26,7 +25,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}-golang
     container_name: ${COMPOSE_PROJECT_NAME}-golang
     restart: always
-    command: sh -c "go mod tidy && gow run src/main.go"
+    command: sh -c "go mod tidy && cd src/ && go install github.com/swaggo/swag/cmd/swag@latest && go get -u github.com/swaggo/swag/cmd/swag && swag init -g main.go -o docs && gow run main.go"
     volumes:
       - type: bind
         source: .
@@ -34,25 +33,24 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_HOST=database
-      - DB_PORT=3306
-      - DB_USER=${BD_USER}
-      - DB_PASSWORD=${BD_PASSWORD}
-      - DB_NAME=${BD_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     depends_on:
       - database
     networks:
       - go-api-network
-  phpmyadmin:
-    image: phpmyadmin
-    container_name: ${COMPOSE_PROJECT_NAME}-phpmyadmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ${COMPOSE_PROJECT_NAME}-pgadmin
     restart: always
     ports:
       - "8081:80"
     environment:
-      - PMA_HOST=database
-      - PMA_USER=${BD_USER}
-      - PMA_PASSWORD=${BD_PASSWORD}
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
       - database
     networks:
@@ -65,4 +63,3 @@ networks:
   go-api-network:
     name: ${COMPOSE_PROJECT_NAME}-network
     driver: bridge
-    

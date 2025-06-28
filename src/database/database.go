@@ -2,13 +2,12 @@ package database
 
 import (
 	"gorm.io/gorm"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"log"
 	"os"
 )
 
 var DB *gorm.DB
-
 
 func Connect() error {
 	user := os.Getenv("DB_USER")
@@ -23,9 +22,9 @@ func Connect() error {
 
 	var err error
 
-	dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + dbName + "?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbName + " port=" + port + " sslmode=disable TimeZone=UTC"
 
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	return err
 }

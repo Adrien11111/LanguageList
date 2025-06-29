@@ -29,7 +29,7 @@ A RESTful API for managing a list of programming languages built with Go, Gin, G
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:Adrien11111/LanguageList.git
 cd LanguageList
 ```
 
@@ -101,9 +101,9 @@ curl -X DELETE http://localhost:8080/api/v1/languages/1
 ```
 .
 ├── src/
-│   ├── controllers/         # HTTP request handlers
-│   ├── models/             # Database models
-│   ├── repositories/       # Data access layer
+│   ├── controllers/       # HTTP request handlers
+│   ├── models/            # Database models
+│   ├── repositories/      # Data access layer
 │   ├── routes/            # Route definitions
 │   ├── middlewares/       # Custom middleware
 │   ├── database/          # Database connection

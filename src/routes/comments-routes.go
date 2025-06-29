@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"go-api/src/controllers"
+	"go-api/src/middlewares"
 )
 
 // @BasePath /api/v1
@@ -11,6 +12,7 @@ import (
 // @Summary Add a new comment
 // @Description Add a new comment to the list
 // @Tags comments
+// @Security ApiKeyAuth
 // @Accept json
 // @Produce json
 // @Param comment body models.Comment true "Comment object"
@@ -19,7 +21,7 @@ import (
 // @Failure 500
 // @Router /comments [post]
 func AddCommentRoute(r *gin.RouterGroup) {
-	r.POST("", controllers.AddComment)
+	r.POST("", middlewares.CheckAuth, controllers.AddComment)
 }
 
 // Get all comments
@@ -54,6 +56,7 @@ func GetCommentByIdRoute(r *gin.RouterGroup) {
 // @Summary Delete a comment by ID
 // @Description Delete a comment by its ID
 // @Tags comments
+// @Security ApiKeyAuth
 // @Accept json
 // @Produce json
 // @Param id path int true "Comment ID"
@@ -62,7 +65,7 @@ func GetCommentByIdRoute(r *gin.RouterGroup) {
 // @Failure 500
 // @Router /comments/{id} [delete]
 func DeleteCommentRoute(r *gin.RouterGroup) {
-	r.DELETE("/:id", controllers.DeleteComment)
+	r.DELETE("/:id", middlewares.CheckAuth, controllers.DeleteComment)
 }
 
 func SetupCommentRoutes(r *gin.RouterGroup) {

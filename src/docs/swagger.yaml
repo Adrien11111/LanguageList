@@ -5,6 +5,10 @@ definitions:
       content:
         example: I love Go for its simplicity and performance.
         type: string
+      language:
+        $ref: '#/definitions/models.Language'
+      language_id:
+        type: integer
       user:
         $ref: '#/definitions/models.User'
       user_id:
@@ -13,6 +17,11 @@ definitions:
   models.Language:
     description: Language model for storing programming languages in the database.
     properties:
+      comments:
+        description: Comments associated with the language
+        items:
+          $ref: '#/definitions/models.Comment'
+        type: array
       description:
         example: A statically typed, compiled programming language designed for simplicity
           and efficiency.
@@ -38,6 +47,11 @@ definitions:
   models.User:
     description: User model for storing user information in the database.
     properties:
+      comments:
+        description: Comments made by the user
+        items:
+          $ref: '#/definitions/models.Comment'
+        type: array
       email:
         example: adrienpani@gmail.com
         type: string
@@ -167,6 +181,8 @@ paths:
           description: Bad Request
         "500":
           description: Internal Server Error
+      security:
+      - ApiKeyAuth: []
       summary: Add a new comment
       tags:
       - comments
@@ -190,6 +206,8 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+      security:
+      - ApiKeyAuth: []
       summary: Delete a comment by ID
       tags:
       - comments

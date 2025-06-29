@@ -161,6 +161,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Add a new comment to the list",
                 "consumes": [
                     "application/json"
@@ -237,6 +242,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete a comment by its ID",
                 "consumes": [
                     "application/json"
@@ -418,6 +428,12 @@ const docTemplate = `{
                     "type": "string",
                     "example": "I love Go for its simplicity and performance."
                 },
+                "language": {
+                    "$ref": "#/definitions/models.Language"
+                },
+                "language_id": {
+                    "type": "integer"
+                },
                 "user": {
                     "$ref": "#/definitions/models.User"
                 },
@@ -430,6 +446,13 @@ const docTemplate = `{
             "description": "Language model for storing programming languages in the database.",
             "type": "object",
             "properties": {
+                "comments": {
+                    "description": "Comments associated with the language",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Comment"
+                    }
+                },
                 "description": {
                     "type": "string",
                     "example": "A statically typed, compiled programming language designed for simplicity and efficiency."
@@ -463,6 +486,13 @@ const docTemplate = `{
             "description": "User model for storing user information in the database.",
             "type": "object",
             "properties": {
+                "comments": {
+                    "description": "Comments made by the user",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Comment"
+                    }
+                },
                 "email": {
                     "type": "string",
                     "example": "adrienpani@gmail.com"

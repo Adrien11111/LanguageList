@@ -12,6 +12,8 @@ services:
       - type: volume
         source: database
         target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
@@ -38,6 +40,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+      - SECRET_KEY=${SECRET_KEY}
     depends_on:
       - database
     networks:

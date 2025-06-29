@@ -79,5 +79,5 @@ func DeleteLanguage(c *gin.Context) {
 		return
 	}
 
-	c.Status(204) // No Content
+	c.Status(204)
 }

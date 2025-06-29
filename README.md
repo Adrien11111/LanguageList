@@ -184,7 +184,7 @@ type Language struct {
 
 ## Future Enhancements
 
-- [ ] Authentication and authorization
+- [x] Authentication and authorization
 - [ ] Language categories and tags
 - [ ] Search and filtering capabilities
 - [ ] Rating and popularity system

@@ -20,6 +20,12 @@ import (
 // @contact.name Adrien Panis
 // @contact.email adrienpani@gmail.com
 
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
     // Connect to database
     if err := database.Connect(); err != nil {
@@ -27,7 +33,7 @@ func main() {
     }
 
     // Auto-migrate the database schema
-    if err := database.DB.AutoMigrate(&models.Language{}); err != nil {
+    if err := database.DB.AutoMigrate(&models.Language{}, &models.User{}, &models.Comment{}); err != nil {
         log.Fatal("Failed to migrate database:", err)
     }
 
@@ -39,7 +45,8 @@ func main() {
 
 	v1 := r.Group("/api/v1")
 	routes.SetupLanguageRoutes(v1.Group("/languages"))
-	// routes.SetupAuthRoutes(v1.Group("/auth"))
+	routes.SetupCommentRoutes(v1.Group("/comments"))
+	routes.SetupAuthRoutes(v1.Group("/auth"))
 
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	r.Run(":8080")

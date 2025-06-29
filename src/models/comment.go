@@ -9,5 +9,7 @@ type Comment struct {
 	Content    string `json:"content" gorm:"not null" example:"I love Go for its simplicity and performance."`
 	User       User   `json:"user" gorm:"foreignKey:UserID;references:ID"`
 	UserID     uint   `json:"user_id" gorm:"not null"`
+	Language   Language `json:"language" gorm:"foreignKey:LanguageID;references:ID"`
+	LanguageID uint   `json:"language_id" gorm:"not null"`
 }
 
